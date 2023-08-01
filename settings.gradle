@@ -1,0 +1,4 @@
+rootProject.name = 'ClientServerJavaNetwork'
+include 'server'
+include 'client'
+
