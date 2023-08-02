@@ -6,19 +6,27 @@ import java.net.Socket;
 
 public class Client {
     public static void main(String[] args) {
-        final String host = "127.0.0.1";
+        final String host = "netology.homework";
         final int port = 8888;
 
         try (
             Socket clientSocket = new Socket(host, port);
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))
         ) {
-            out.println("GET / HTTP/1.1\n" + "Host: " + host + "\n\n\n");
+            while (true) {
+                String resp = in.readLine();
 
-            String resp = in.readLine();
+                if (resp.equals("closed")) {
+                    break;
+                }
 
-            System.out.println(resp);
+                System.out.println(resp);
+                String answer = reader.readLine();
+
+                out.println(answer);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
